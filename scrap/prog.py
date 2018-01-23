@@ -2,6 +2,10 @@
 import loadnathmasto,os,time,codecs,requests,threading,toot
 from threading import *
 
+chem_dossier="/home/nathan/mastocorpus/"
+#La variable chem_dossier peut être changé par d'autres utilisateurs du programme.
+
+
 dejas_t=["mastodon.social"]
 instance=[]
 
@@ -38,7 +42,7 @@ def calc_temps_restant(nb_tr):
 #analyse l'instance qu'on lui donne, ajoute a la liste des instances de nouvelles instances
 def analyse_and_add_instance(inst):
     global instance
-    chem_inst="/home/nathan/mastocorpus/"+inst
+    chem_inst=chem_dossier+inst
     a=open(chem_inst,"r")
     tab_acct=[]
     for i in loadnathmasto.json_parse(a):
@@ -63,7 +67,7 @@ def analyse_and_add_instance(inst):
 
 #cette fonction verifie si le dernier toot a été coupé ou non en comparant la fin du dernier toot du fichier a la fin du dernier toot non coupé 
 def verif_fichier(inst):
-    a=open("/home/nathan/mastocorpus/"+inst,"r")
+    a=open(chem_dossier+inst,"r")
     a=a.read()
     b=a[len(a)-13:len(a)]
     print(b)
@@ -88,7 +92,7 @@ def verifie_telechargement(inst):
     verif_fichier(inst)
     print("Vérifie le téléchargement de l'instance "+inst)
     hinst="https://"+inst
-    chem_inst="/home/nathan/mastocorpus/"+inst
+    chem_inst=chem_dossier+inst
     a=open(chem_inst,"r")
     tab_acct=[]
     for i in loadnathmasto.json_parse(a):
@@ -101,7 +105,7 @@ def verifie_telechargement(inst):
         print("le fichier "+inst+" a mal été téléchargé")
         print("reprise du téléchargement du fichier")
         id0=o-1
-        fich="/home/nathan/mastocorpus/"+inst
+        fich=chem_dossier+inst
         with codecs.open(fich,"a","utf-8") as f: 
             while id0>-1:
                 time.sleep(0.1)
@@ -115,7 +119,7 @@ def verifie_telechargement(inst):
                     f.write(o)
                 id0-=1
                 h,m,s=calc_temps_restant(int(id0))
-                print("toots restants ="+str(id0),"    temps restant =",h,"heures",m,"minutes",s,"secondes")
+                print("toots restants ="+str(id0),"    temps restant estimé =",h,"heures",m,"minutes",s,"secondes")
     analyse_and_add_instance(inst)
     
 
@@ -145,7 +149,7 @@ def download_instance(inst):
     inst="https://"+inst
     n=loadnathmasto.queryInstance(inst)
     id0=n
-    fich="/home/nathan/mastocorpus/"+inst[8:]
+    fich=chem_dossier+inst[8:]
     with codecs.open(fich,"a","utf-8") as f: 
         while id0>-1:
             cmd = inst+'/api/v1/statuses/'+str(id0)
@@ -158,8 +162,7 @@ def download_instance(inst):
                     f.write(o)
             id0-=1
             h,m,s=calc_temps_restant(int(id0))
-            print("toots restants ="+str(id0),"    temps restant =",h,"heures",m,"minutes",s,"secondes")
-            #input()
+            print("toots restants ="+str(id0),"    temps restant estimé =",h,"heures",m,"minutes",s,"secondes")
             time.sleep(0.1)
 
 
@@ -171,12 +174,13 @@ def download_analyse(inst):
         download_instance(inst)
         analyse_and_add_instance(inst)
     else: print("il a déjà été téléchargé")
+    instance=list(set(instance))
 
 #fonction principale
 def main():
-    dd=os.listdir("/home/nathan/mastocorpus/")
+    dd=os.listdir(chem_dossier)
     for d in dd: dejas_t.append(d)
-    dd=os.listdir("/home/nathan/mastocorpus/")
+    dd=os.listdir(chem_dossier)
     for d in dd: verifie_telechargement(d)
     get_liste_instance()
     print(instance)
