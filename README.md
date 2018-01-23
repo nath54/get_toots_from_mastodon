@@ -1,6 +1,7 @@
 
 Ce programme va télécharger des toots sur des instances differentes, avec ses toots là, il va récuperer de nouvelles instances puis télécharger les nouveaux toots de ses instances et ainsi de suite...
 
+Tous les programmes sont dans le dossier scrap.
 Pour lancer le programme, c'est très simple, il faut aller dans le dossier contenant le programme avec un terminal puis lancer la commande que vous trouverez si-dessous.
 Il faut utiliser python3 car avec python2, il peut y avoir des problèmes d'encodage, il faut lancer le programme prog.py, c'est le programme principal :
 
