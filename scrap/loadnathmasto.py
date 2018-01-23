@@ -12,7 +12,7 @@ from functools import partial
 def json_parse(fileobj, decoder=JSONDecoder(), buffersize=65536):
     buffer = ''
     for chunk in iter(partial(fileobj.read, buffersize), ''):
-        buffer += chunkbg
+        buffer += chunk
         # il peut y avoir du garbage entre 2 objets json
         if buffer[0]!='{':
             deb=buffer.find('{')

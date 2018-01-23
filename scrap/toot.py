@@ -43,7 +43,7 @@ def tootTextPrinter(tt):
 def tootPrinter(tt):
     print(tt)
 
-def loadFile(handler,jsonfile="/home/xtof/nas1/TALC/Synalp/Corpus/Mastodon/toots/octodon.social"):
+def loadFile(handler,jsonfile):
     with codecs.open(jsonfile,"r","utf-8") as f:
         for l in f:
             if len(l)>0 and l[0]=='{':
