@@ -1,4 +1,3 @@
-# mastodon
 
 Ce programme va télécharger des toots sur des instances differentes, avec ses toots là, il va récuperer de nouvelles instances puis télécharger les nouveaux toots de ses instances et ainsi de suite...
 
