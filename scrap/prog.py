@@ -1,4 +1,4 @@
- #*-coding:utf-8-*
+#*-coding:utf-8-*
 import loadnathmasto,os,time,codecs,requests,threading,toot
 from threading import *
 
@@ -16,7 +16,6 @@ def save_liste_instance():
         txti+=k+" "
     li=open("listeinstance.txt","w")
     li.write(txti)
-
 
 #fonction qui récupere la liste des instances depuis le fichier listeinstance.txt
 def get_liste_instance():
@@ -121,13 +120,6 @@ def verifie_telechargement(inst):
                 h,m,s=calc_temps_restant(int(id0))
                 print("toots restants ="+str(id0),"    temps restant estimé =",h,"heures",m,"minutes",s,"secondes")
     analyse_and_add_instance(inst)
-    
-
-
-
-
-
-
 
 #verifie si le fichier existe déjà, si "oui" retourné, le fichier n'existe pas
 def verif_fichier(a):
@@ -156,14 +148,12 @@ def download_instance(inst):
                 o = response.text
                 f.write(o)
             else:
-                    o = '{"id":"'+str(id0)+'"}'
-                    f.write(o)
+                o = '{"id":"'+str(id0)+'"}'
+                f.write(o)
             id0-=1
             h,m,s=calc_temps_restant(int(id0))
-            print("toots restants ="+str(id0),"    temps restant estimé =",h,"heures",m,"minutes",s,"secondes")
+            print("INSTANCE",inst,"toots restants ="+str(id0),"    temps restant estimé =",h,"heures",m,"minutes",s,"secondes")
             time.sleep(0.1)
-
-
 
 #fonction pour lancer les fonctions download_instance et analyse_and_add_instance ensembles
 def download_analyse(inst):
@@ -188,21 +178,26 @@ def main():
     get_liste_instance()
     instance=list(set(instance))
     print("INSTANCES AYANTS ÉTÉS REPÉRÉES",instance)
-    while len(instance) != 0 :
+    def lancer():
         x=0
         din=instance[x]
-        print("DIN =",din)
+        global din
         if len(din) >= 5:
+            print("DIN =",din)
             del(instance[x])
             dejas_t.append(din)
             download_analyse(din)
         else:
             print("vide")
-            break
-        
+    while len(instance) != 0 :
+        td=[]
+        for r in range(10):
+            td.append( Thread(target=lancer) )
+            td[r].start()
+        for t in td:
+            t.join()
 
 main()
 
 save_liste_instance()
-
 
