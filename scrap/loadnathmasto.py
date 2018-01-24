@@ -118,7 +118,10 @@ def queryInstance(inst):
     response = requests.get(cmd)
     if response.status_code==404: return 0
     o = response.json()
-    n=int(o['stats']['status_count'])
+    try: n=int(o['stats']['status_count'])
+    except:
+        print("ErRoR rEcUpErAtIoN nB tOot DaNs InStAnCe")
+        n=1
     return n
 
 def complete():

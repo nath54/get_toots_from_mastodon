@@ -131,20 +131,18 @@ def verifie_telechargement(inst):
 
 #verifie si le fichier existe déjà, si "oui" retourné, le fichier n'existe pas
 def verif_fichier(a):
-    try:
-        b=open(a,"r")
-        return "oui"
-    except: return "non"
+    b=os.listdir(chem_dossier)
+    if a not in b: return True
+    else: return False
 
 #vérifie si le fichier est dans la liste des instances déjà téléchargées, si "oui" retourné, l'instance ne se trouve pas dans la liste des instances déjà téléchargées
 def verif_tel(a):
-    for x in dejas_t:
-        if x == a:
-            return "oui"
-    return "non"
+    if a not in dejas_t: return True
+    else: return False
 
 #telecharge l'instance qu'on lui donne
 def download_instance(inst):
+    global instance
     print("TELECHAGEMENT DU FICHIER : "+inst)
     inst="https://"+inst
     n=loadnathmasto.queryInstance(inst)
@@ -169,24 +167,29 @@ def download_instance(inst):
 
 #fonction pour lancer les fonctions download_instance et analyse_and_add_instance ensembles
 def download_analyse(inst):
-    v=verif_tel(inst)
-    if v == "oui":
+    global instance
+    vv=verif_fichier(inst)
+    print(vv)
+    if vv == True:
         download_instance(inst)
         analyse_and_add_instance(inst)
     else: print("il a déjà été téléchargé")
     instance=list(set(instance))
+    save_liste_instance()
 
 #fonction principale
 def main():
+    global instance
     dd=os.listdir(chem_dossier)
     for d in dd: dejas_t.append(d)
+    print("FICHIERS AYANTS DÉJÀ ÉTÉS TÉLÉCHARGÉS",dejas_t)
     dd=os.listdir(chem_dossier)
     for d in dd: verifie_telechargement(d)
     get_liste_instance()
-    print(instance)
+    instance=list(set(instance))
+    print("INSTANCES AYANTS ÉTÉS REPÉRÉES",instance)
     while len(instance) != 0 :
         x=0
-        #try: 
         din=instance[x]
         print("DIN =",din)
         if len(din) >= 5:
@@ -196,9 +199,6 @@ def main():
         else:
             print("vide")
             break
-        #except:
-        #    print("vide")
-        #    break
         
 
 main()

@@ -1,9 +1,11 @@
 import loadnathmasto
+#from prog import chem_dossier
+chem_dossier="/home/nathan/mastocorpus"
 
 def verifie_toot0(inst):
     print("Vérifie le téléchargement de l'instance "+inst)
     hinst="https://"+inst
-    chem_inst="/home/nathan/mastocorpus/"+inst
+    chem_inst=chem_dossier+inst
     a=open(chem_inst,"r")
     tab_acct=[]
     for i in loadnathmasto.json_parse(a):

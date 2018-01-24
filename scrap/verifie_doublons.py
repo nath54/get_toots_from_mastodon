@@ -1,8 +1,10 @@
 import loadnathmasto
+#from prog import chem_dossier
+chem_dossier="/home/nathan/mastocorpus"
 
 def verif_doubles_toots(inst):
     ids=[]
-    chem_inst="/home/nathan/mastocorpus/"+inst
+    chem_inst=chem_dossier+inst
     a=open(chem_inst,"r")
     tab_acct=[]
     for i in loadnathmasto.json_parse(a):
@@ -18,4 +20,4 @@ def verif_doubles_toots(inst):
     else:
         print("il y a peut-etre des doublons")
 
-verif_doubles_toots("slime.global")
+verif_doubles_toots("instance.business")
