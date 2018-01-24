@@ -94,6 +94,7 @@ def verifie_telechargement(inst):
     chem_inst=chem_dossier+inst
     a=open(chem_inst,"r")
     tab_acct=[]
+    o=0
     for i in loadnathmasto.json_parse(a):
         try:
             o=i["id"]
@@ -179,15 +180,22 @@ def main():
         for d in dd:
             td.append( Thread(target=verifie_telechargement(d)) )
             td[len(td)-1].start()
-        
+        for t in td: t.join()
     else:
         nb=len(dd)
         while nb > 0:
             td=[]
             if nb - 10 > 0:
                 for x in range(10):
-                    td.append( Thread(target=verifie_telechargement(d)) )
+                    td.append( Thread(target=verifie_telechargement(dd[x])) )
                     td[x].start()
+                for x in range(10): del(dd[x])
+                for t in td: t.join()
+            else:
+                for x in range(0,len(dd)-1):
+                    td.append( Thread(target=verifie_telechargement(dd[x])) )
+                    td[x].start()
+                for x in range(0,len(dd)-1): del(dd[x])
                 for t in td: t.join()
             
     get_liste_instance()
