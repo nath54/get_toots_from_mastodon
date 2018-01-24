@@ -76,14 +76,14 @@ def verif_fichier(inst):
         b=a[len(a)-2:len(a)]
         print(b)
         if b == "]}":
-            print("normalement, mais je suis moin sûr, le dernier toot n'a pas été coupé lorsque le téléchargement a été interrompu")
+            print("normalement, mais j'ai quelques doutes, le dernier toot n'a pas été coupé lorsque le téléchargement a été interrompu")
         else:
             b=a[len(a)-1]
             print(b)
             if b == "}":
                 print("J'ai plus de doutes, mais normalement le dernier toot n'a pas été coupé lorsque le téléchargement a été interrompu")
             else:
-                print("J'ai bien peur que le toot ai été coupé lors de l'arrêt téléchargement")
+                print("J'ai bien peur que l'instance",inst,"aie un toot qui a été coupé lors de l'arrêt téléchargement")
                 exit()
 
 #fonction qui verifie si une instance a bien été téléchargée et qui complete le fichier si mal telecharge
@@ -174,7 +174,22 @@ def main():
     for d in dd: dejas_t.append(d)
     print("FICHIERS AYANTS DÉJÀ ÉTÉS TÉLÉCHARGÉS",dejas_t)
     dd=os.listdir(chem_dossier)
-    for d in dd: verifie_telechargement(d)
+    td=[]
+    if len(dd) <= 10:
+        for d in dd:
+            td.append( Thread(target=verifie_telechargement(d)) )
+            td[len(td)-1].start()
+        
+    else:
+        nb=len(dd)
+        while nb > 0:
+            td=[]
+            if nb - 10 > 0:
+                for x in range(10):
+                    td.append( Thread(target=verifie_telechargement(d)) )
+                    td[x].start()
+                for t in td: t.join()
+            
     get_liste_instance()
     instance=list(set(instance))
     print("INSTANCES AYANTS ÉTÉS REPÉRÉES",instance)
