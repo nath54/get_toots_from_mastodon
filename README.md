@@ -8,7 +8,9 @@ Tous les programmes sont dans le dossier scrap.
 
 Pour lancer le programme, c'est très simple, il faut aller dans le dossier contenant le programme avec un terminal puis lancer la commande que vous trouverez ci-dessous. Il faut utiliser python3 car avec python2, il peut y avoir des problèmes d'encodage, il faut lancer le programme prog.py, c'est le programme principal 
 
-: python3 prog.py
+```
+python3 prog.py
+```
 
 IMPORTANT : avant de lancer le programme, il faut que vous changiez la variable chem_dossier qui se trouve au début du programme prog.py avec le chemin du dossier où vous voudriez télécharger toutes les instances. Si vous n'avez pas changé cette variable, le programme plantera. Il faut créer le dossier car si vous avez mis dans la variable un dossier qui n'existe pas, il plantera car le programme ne crée pas le dossier.
 
