@@ -52,7 +52,8 @@ def analyse_and_add_instance(inst):
             #print("acct = ",gg)
             tab_acct.append(gg)
         except:
-            print("error")
+            error=True
+            #print("error")
     #print("tab =",tab_acct)
     for t in tab_acct:
         tt=t.split("@")
@@ -60,7 +61,8 @@ def analyse_and_add_instance(inst):
         if len(tt) == 2:
             instance.append(tt[1])
         else:
-            print(t,": Ne contient pas le nom de l'instance")  #les toots qui sont téléchargés et qui sont sur la meme instance qui est en train de se télécharger ne contiennent pas le nom de l'instance dans leur ['account]['acct']
+            error=True
+            #print(t,": Ne contient pas le nom de l'instance")  #les toots qui sont téléchargés et qui sont sur la meme instance qui est en train de se télécharger ne contiennent pas le nom de l'instance dans leur ['account]['acct']
     print()
     #print(instance)
 
@@ -119,7 +121,7 @@ def verifie_telechargement(inst):
                     f.write(o)
                 id0-=1
                 h,m,s=calc_temps_restant(int(id0))
-                print("toots restants ="+str(id0),"    temps restant estimé =",h,"heures",m,"minutes",s,"secondes")
+                print("INSTANCE",inst,"toots restants ="+str(id0),"    temps restant estimé =",h,"heures",m,"minutes",s,"secondes")
     analyse_and_add_instance(inst)
 
 #verifie si le fichier existe déjà, si "oui" retourné, le fichier n'existe pas
@@ -178,8 +180,9 @@ def main():
     td=[]
     if len(dd) <= 10:
         for d in dd:
-            td.append( Thread(target=verifie_telechargement(d)) )
+            td.append( Thread(target=verifie_telechargement,args=(d,)) )
             td[len(td)-1].start()
+        dd=[]
         for t in td: t.join()
     else:
         nb=len(dd)
@@ -187,13 +190,13 @@ def main():
             td=[]
             if nb - 10 > 0:
                 for x in range(10):
-                    td.append( Thread(target=verifie_telechargement(dd[x])) )
+                    td.append( Thread(target=verifie_telechargement,args=(dd[x],)) )
                     td[x].start()
                 for x in range(10): del(dd[x])
                 for t in td: t.join()
             else:
                 for x in range(0,len(dd)-1):
-                    td.append( Thread(target=verifie_telechargement(dd[x])) )
+                    td.append( Thread(target=verifie_telechargement,args=(dd[x],)) )
                     td[x].start()
                 for x in range(0,len(dd)-1): del(dd[x])
                 for t in td: t.join()
