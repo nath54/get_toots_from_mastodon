@@ -2,7 +2,7 @@
 import loadnathmasto,os,time,codecs,requests,threading,toot
 from threading import *
 
-chem_dossier="/home/nathan/mastocorpus/"
+chem_dossier="mastocorpus/"
 #La variable chem_dossier peut être changé par d'autres utilisateurs du programme.
 
 
