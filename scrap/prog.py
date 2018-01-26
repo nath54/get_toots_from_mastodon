@@ -222,6 +222,7 @@ def main():
             td[r].start()
         for t in td:
             t.join()
+    import test_maj    
 
 main()
 
