@@ -2,6 +2,9 @@
 # Que fait ce programme ?
 
 Ce programme télécharge des toots sur des instances différentes, avec ses toots là, il récupère de nouvelles instances puis télécharge les nouveaux toots de ses instances et ainsi de suite...
+Il continue aussi les téléchargements des instances qui ont étés mal téléchargées.
+
+Le programme calc_stats_ints.py crée une page_web (PAGE.html) avec des statistiques des instances déjà téléchargées.
 
 # Comment executer ce programme ?
 
