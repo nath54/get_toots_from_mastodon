@@ -123,7 +123,7 @@ def cree_page_html():
     
 """ 
     milieu_page="\n"+texte
-    print(debut_page+milieu_page+fin_page)
+    #print(debut_page+milieu_page+fin_page)
     fichier=open("PAGE.html","w")
     fichier.write(debut_page+milieu_page+fin_page)
 

@@ -55,3 +55,4 @@ def maj(inst):
 
 dd=os.listdir(chem_dossier)
 for d in dd: maj(d)
+print("La mise a jour est finie :)")
