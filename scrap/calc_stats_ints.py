@@ -2,7 +2,7 @@
 import loadnathmasto,os,dateutil.parser,operator,collections
 from collections import *
 from decimal import *
-chem_dossier="/home/nathan/mastocorpus/"
+chem_dossier="mastocorpus/"
 
 def calc_stats(inst):
     toot_id=[]
